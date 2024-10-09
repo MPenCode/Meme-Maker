@@ -1,6 +1,26 @@
+import {useEffect, useState, useContext} from 'react'
+import {MemeContext} from '../context/contextMeme.jsx'
+
 const NavBar = () => {
+    const {state, dispatch} = useContext(MemeContext)
+
+useEffect(() => {
+    dispatch({type: 'search', payload: state.memes})
+
+}, [])
+
+const handleSearch = (e) => {
+    dispatch({type: 'search', payload: e.target.value})
+    const searchValue = e.target.value
+    const searchResults = state.memes.filter((meme) => {
+        return meme.name.includes(searchValue)
+    })
+    dispatch({type: 'search', payload: searchResults})
+}
+
+
   return (
-    <div className="navbar bg-base-100">
+    <nav className="navbar bg-base-100">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">Meme-Maker</a>
       </div>
@@ -8,6 +28,7 @@ const NavBar = () => {
         <div className="form-control">
           <input
             type="text"
+            onChange={handleSearch}
             placeholder="Search"
             className="input input-bordered w-24 md:w-auto"
           />
@@ -44,7 +65,7 @@ const NavBar = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

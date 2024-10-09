@@ -8,6 +8,7 @@ const initialState = {
   random: 0,
   text1: "",
   custom: [],
+  search: "",
 };
 
 // Reducer function
@@ -43,6 +44,11 @@ const memeReducer = (state, action) => {
         ...state,
         custom: action.payload,
       };
+    case "search":
+        return {
+            ...state,
+            search: action.payload,
+        };
 
     default:
       return state;

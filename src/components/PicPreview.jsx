@@ -9,7 +9,10 @@ export default function PicPreview() {
     dispatch({ type: "random", payload: state.memes.indexOf(value) });
   };
   return (
-    <div className="images-container">
+    <details className="collapse bg-base-200">
+  <summary className="collapse-title text-xl font-medium">Click to open/close</summary>
+  <div className="collapse-content">
+  <div className="images-container">
       {state.memes.map((image) => {
         return (
           <div key={image.id} className="image-wrapper">
@@ -24,5 +27,7 @@ export default function PicPreview() {
         );
       })}
     </div>
+  </div>
+</details>
   );
 }
