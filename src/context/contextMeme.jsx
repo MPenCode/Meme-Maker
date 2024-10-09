@@ -1,39 +1,52 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useReducer } from "react";
 
 // Initial state
 const initialState = {
-    images: [],
-    memes: [],
-    data: null,
-    range: [0, 25],
+  images: [],
+  memes: [],
+  range: [0, 25],
+  random: 0,
+  text1: "",
+  custom: [],
 };
 
 // Reducer function
 const memeReducer = (state, action) => {
-    switch (action.type) {
-        case 'memes':
-            return {
-                ...state,
-                memes:  action.payload,
-            };
-        case 'images':
-            return {
-                ...state,
-                images: action.payload,
-            };
-        case 'data':
-            return {
-                ...state,
-                data: action.payload,
-            };
-        case 'range':
-            return {
-                ...state,
-                range: action.payload,
-            };
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case "memes":
+      return {
+        ...state,
+        memes: action.payload,
+      };
+    case "images":
+      return {
+        ...state,
+        images: action.payload,
+      };
+    case "range":
+      return {
+        ...state,
+        range: action.payload,
+      };
+    case "random":
+        return {
+            ...state,
+            random: action.payload,
+        };
+    case "text1":
+      return {
+        ...state,
+        text1: action.payload,
+      };
+    case "custom":
+      return {
+        ...state,
+        custom: action.payload,
+      };
+
+    default:
+      return state;
+  }
 };
 
 // Create context
@@ -41,11 +54,11 @@ export const MemeContext = createContext();
 
 // Context provider component
 export const MemeProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(memeReducer, initialState);
+  const [state, dispatch] = useReducer(memeReducer, initialState);
 
-    return (
-        <MemeContext.Provider value={{ state, dispatch }}>
-            {children}
-        </MemeContext.Provider>
-    );
+  return (
+    <MemeContext.Provider value={{ state, dispatch }}>
+      {children}
+    </MemeContext.Provider>
+  );
 };
