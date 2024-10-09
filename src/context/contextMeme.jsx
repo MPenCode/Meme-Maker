@@ -2,22 +2,34 @@ import { createContext, useReducer } from 'react';
 
 // Initial state
 const initialState = {
+    images: [],
     memes: [],
     data: null,
+    range: [0, 25],
 };
 
 // Reducer function
 const memeReducer = (state, action) => {
     switch (action.type) {
-        case 'meme':
+        case 'memes':
             return {
                 ...state,
-                memes: [...state.memes, action.payload],
+                memes:  action.payload,
+            };
+        case 'images':
+            return {
+                ...state,
+                images: action.payload,
             };
         case 'data':
             return {
                 ...state,
-                selectedMeme: action.payload,
+                data: action.payload,
+            };
+        case 'range':
+            return {
+                ...state,
+                range: action.payload,
             };
         default:
             return state;
