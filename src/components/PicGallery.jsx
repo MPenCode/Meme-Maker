@@ -30,12 +30,17 @@ const PicGallery = () => {
     const handleClick = (value) => {
         console.log(value);
     };
+    const results = state.searchValue === "" 
+        ? state.memes 
+        : state.search.filter((image) => {
+            return image.name.toLowerCase().includes(state.searchValue.toLowerCase());
+        });
 
     return (
         <div className="flex flex-col items-center my-8">
             <PicRadio />
             <div className="grid grid-cols-5 gap-4 mb-4">
-                {state.search.slice(state.range[0], state.range[1]).map((image) => {
+                {results.slice(state.range[0], state.range[1]).map((image) => {
                     return (
                         <div className="relative" key={image.id}>
                             <img

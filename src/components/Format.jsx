@@ -3,7 +3,7 @@ import { MemeContext } from "../context/contextMeme.jsx";
 
 const Format = () => {
   const { state, dispatch } = useContext(MemeContext);
-  
+
     const myInput1 = useRef();
     const myInput2 = useRef();
 
@@ -11,7 +11,7 @@ const Format = () => {
   const handleMemeText = (e) => {
     e.preventDefault();
     //find the name attribute of the target
-    console.log(`${e.target.name}:${e.target.value}`);
+    // console.log(`${e.target.name}:${e.target.value}`);
     //[e.target.name] => "computed property"
 dispatch({ type: "text1", payload: {[e.target.name]: e.target.value} });
 };
@@ -19,7 +19,7 @@ dispatch({ type: "text1", payload: {[e.target.name]: e.target.value} });
 const handleUpload = (e) => {
     //e.target.value will just give us a fakepath and file name
     //https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
-    console.log(e.target.files[0].name);
+    // console.log(e.target.files[0].name);
     //expects a file data
     //blob: file-like object of raw data
     //URL: constructor that creates the url of what we are loading

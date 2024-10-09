@@ -1,15 +1,14 @@
-import {useContext, useRef} from 'react';
-import {MemeContext} from '../context/contextMeme.jsx';
-import domtoimage from 'dom-to-image';
-import PicPreview from './PicPreview.jsx';
-
+import { useContext, useRef } from "react";
+import { MemeContext } from "../context/contextMeme.jsx";
+import domtoimage from "dom-to-image";
+import PicPreview from "./PicPreview.jsx";
 
 const Meme = () => {
-    const { state, dispatch } = useContext(MemeContext);
+  const { state, dispatch } = useContext(MemeContext);
 
-    const myImage = useRef(null);
-    const myInput1 = useRef(null);
-    const myInput2 = useRef(null);
+  const myImage = useRef(null);
+  const myInput1 = useRef(null);
+  const myInput2 = useRef(null);
 
   const handleReset = () => {
     dispatch({ type: "images", payload: "" });
@@ -21,17 +20,34 @@ const Meme = () => {
   };
   const downloadMeme = () => {
     domtoimage
-        //replace document.getElementById
-        .toJpeg(myImage.current, { quality: 0.95 })
-        .then(function (dataUrl) {
-            console.log(dataUrl);
-            //will create a link and fire the click on it
-            var link = document.createElement('a');
-            link.download = 'my-image-name.jpeg';
-            link.href = dataUrl;
-            link.click();
-        });
-};
+      //replace document.getElementById
+      .toJpeg(myImage.current, { quality: 0.95 })
+      .then(function (dataUrl) {
+        // console.log(dataUrl);
+
+        // Set a timeout to delete the meme after 7 days
+        // setTimeout(() => {
+        //     const updatedMemes = JSON.parse(localStorage.getItem('myMemes')) || [];
+        //     const filteredMemes = updatedMemes.filter(meme => meme.id !== newMeme.id);
+        //     localStorage.setItem('myMemes', JSON.stringify(filteredMemes));
+        // }, 7 * 24 * 60 * 60 * 1000);
+        // 7 days in milliseconds
+        const myMemes = JSON.parse(localStorage.getItem("myMemes")) || [];
+        const newMeme = {
+          dataUrl,
+          time: new Date().toISOString(),
+          id: Date.now(),
+          name: (state.memeName + ".jpeg"),
+        };
+        myMemes.push(newMeme);
+        localStorage.setItem("myMemes", JSON.stringify(myMemes));
+        //will create a link and fire the click on it
+        var link = document.createElement("a");
+        link.download = (state.memeName + ".jpeg");
+        link.href = dataUrl;
+        link.click();
+      });
+  };
 
   return (
     <div>
@@ -52,9 +68,7 @@ const Meme = () => {
       <button onClick={downloadMeme}>save</button>
       <button onClick={handleReset}>reset</button>
 
-      {state.memes.length && (
-        <PicPreview />
-      )}
+      {state.memes.length && <PicPreview />}
     </div>
   );
 };

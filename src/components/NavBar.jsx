@@ -10,12 +10,13 @@ useEffect(() => {
 }, [])
 
 const handleSearch = (e) => {
-    dispatch({type: 'search', payload: e.target.value})
-    const searchValue = e.target.value
-    const searchResults = state.memes.filter((meme) => {
-        return meme.name.includes(searchValue)
-    })
-    dispatch({type: 'search', payload: searchResults})
+    dispatch({type: 'searchValue', payload: e.target.value})
+    // const searchResults = state.memes.filter((meme) => {
+    //     return meme.name.includes(state.searchValue)
+    // })
+    dispatch({type: 'search', payload: state.memes.filter((meme) => {
+        return meme.name.includes(state.searchValue)
+    })})
 }
 
 
