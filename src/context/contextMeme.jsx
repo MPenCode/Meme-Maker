@@ -11,7 +11,8 @@ const initialState = {
   search: [],
   searchValue: "",
   memeName: "my-meme",
-
+  colorMeme1: "#ffffff",
+  colorMeme2: "#ffffff",
 };
 
 // Reducer function
@@ -61,6 +62,16 @@ const memeReducer = (state, action) => {
         return {
             ...state,
             memeName: action.payload,
+        };
+    case "colorMeme1":
+        return {
+            ...state,
+            colorMeme1: action.payload,
+        };
+    case "colorMeme2":
+        return {
+            ...state,
+            colorMeme2: action.payload
         };
 
     default:

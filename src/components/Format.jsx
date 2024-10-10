@@ -7,7 +7,6 @@ const Format = () => {
     const myInput1 = useRef();
     const myInput2 = useRef();
 
-
   const handleMemeText = (e) => {
     e.preventDefault();
     //find the name attribute of the target
@@ -36,25 +35,41 @@ return (
     <div className="flex flex-col items-center space-y-4 p-4">
         <div className="flex flex-col items-center space-y-2">
             <label className="text-lg font-semibold">Top Text</label>
-            <input
-                onChange={handleMemeText}
-                ref={myInput1}
-                type="text"
-                name="topText"
-                id="topText"
-                className="input input-bordered w-full max-w-xs"
-            />
+            <div className="flex items-center space-x-2">
+                <input
+                    onChange={handleMemeText}
+                    ref={myInput1}
+                    type="text"
+                    name="topText"
+                    id="topText"
+                    className="input input-bordered w-full max-w-xs"
+                />
+                <input
+                    type="color"
+                    onChange={(e) => {
+                        dispatch({ type: "colorMeme1", payload: e.target.value })
+                    }}
+                    className="w-10 h-10 p-0 border-none"
+                />
+            </div>
         </div>
         <div className="flex flex-col items-center space-y-2">
             <label className="text-lg font-semibold">Bottom Text</label>
-            <input
-                onChange={handleMemeText}
-                ref={myInput2}
-                type="text"
-                name="bottomText"
-                id="bottomText"
-                className="input input-bordered w-full max-w-xs"
-            />
+            <div className="flex items-center space-x-2">
+                <input
+                    onChange={handleMemeText}
+                    ref={myInput2}
+                    type="text"
+                    name="bottomText"
+                    id="bottomText"
+                    className="input input-bordered w-full max-w-xs"
+                />
+                <input
+                    type="color"
+                    onChange={(e) => dispatch({ type: "colorMeme2", payload: e.target.value })}
+                    className="w-10 h-10 p-0 border-none"
+                />
+            </div>
         </div>
         <button onClick={handleRandom} className="btn btn-primary mt-4">Random</button>
         <br />

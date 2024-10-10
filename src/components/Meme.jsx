@@ -1,23 +1,17 @@
 import { useContext, useRef } from "react";
 import { MemeContext } from "../context/contextMeme.jsx";
 import domtoimage from "dom-to-image";
-import PicPreview from "./PicPreview.jsx";
 
 const Meme = () => {
   const { state, dispatch } = useContext(MemeContext);
 
   const myImage = useRef(null);
-  const myInput1 = useRef(null);
-  const myInput2 = useRef(null);
-
   const handleReset = () => {
-    dispatch({ type: "images", payload: "" });
+    dispatch({ type: "images", payload: [] });
     dispatch({ type: "text", payload: "" });
     dispatch({ type: "random", payload: 0 });
-    console.log("here", myInput2);
-    myInput1.current.value = "";
-    myInput2.current.value = "";
   };
+
   const downloadMeme = () => {
     domtoimage
       //replace document.getElementById
@@ -25,50 +19,67 @@ const Meme = () => {
       .then(function (dataUrl) {
         // console.log(dataUrl);
 
-        // Set a timeout to delete the meme after 7 days
-        // setTimeout(() => {
-        //     const updatedMemes = JSON.parse(localStorage.getItem('myMemes')) || [];
-        //     const filteredMemes = updatedMemes.filter(meme => meme.id !== newMeme.id);
-        //     localStorage.setItem('myMemes', JSON.stringify(filteredMemes));
-        // }, 7 * 24 * 60 * 60 * 1000);
-        // 7 days in milliseconds
         const myMemes = JSON.parse(localStorage.getItem("myMemes")) || [];
         const newMeme = {
           dataUrl,
           time: new Date().toISOString(),
           id: Date.now(),
-          name: (state.memeName + ".jpeg"),
+          name: state.memeName + ".jpeg",
         };
         myMemes.push(newMeme);
         localStorage.setItem("myMemes", JSON.stringify(myMemes));
         //will create a link and fire the click on it
         var link = document.createElement("a");
-        link.download = (state.memeName + ".jpeg");
+        link.download = state.memeName + ".jpeg";
         link.href = dataUrl;
         link.click();
       });
   };
 
   return (
-    <div>
-      <div className="meme-container" ref={myImage}>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-base-100">
+      <div
+        className="meme-container relative w-2/3 max-w-screen-lg"
+        ref={myImage}
+      >
         {state.memes.length && (
           <img
-            //we grab the index of images array, which is initially 0 because of our randomImage state. Later we manipulate that state to get a random image
             src={state.custom ? state.custom : state.memes[state.random].url}
-            //shorter version: we check if the left side of the operator returns undefined or null and then chose the one on the right
-            // src={customImage ?? images[randomImage].url}
             alt={state.memes[state.random].name}
-            className="first-image"
+            className="first-image w-full"
           />
         )}
-        <p className="top">{state.text1?.topText}</p>{" "}
-        <p className="bottom">{state.text1?.bottomText}</p>
+        <p
+          className="top absolute top-0 left-1/2 transform -translate-x-1/2 text-xl font-bold"
+          style={{ color: state.colorMeme1 }}
+        >
+          {state.text1?.topText}
+        </p>
+        <p
+          className="bottom absolute bottom-0 left-1/2 transform -translate-x-1/2 text-xl font-bold"
+          style={{ color: state.colorMeme2 }}
+        >
+          {state.text1?.bottomText}
+        </p>
       </div>
-      <button onClick={downloadMeme}>save</button>
-      <button onClick={handleReset}>reset</button>
-
-      {state.memes.length && <PicPreview />}
+      <div className="mt-4 flex">
+        <input
+          onChange={(e) => {
+            dispatch({ type: "memeName", payload: e.target.value });
+          }}
+          type="text"
+          name="memeName"
+          id="memeName"
+          className="input input-bordered w-full max-w-xs mr-2"
+          placeholder="MemeName"
+        />
+        <button className="btn btn-primary mr-2" onClick={downloadMeme}>
+          Save
+        </button>
+        <button className="btn btn-secondary" onClick={handleReset}>
+          Reset
+        </button>
+      </div>
     </div>
   );
 };

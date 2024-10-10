@@ -29,6 +29,7 @@ const PicGallery = () => {
 
     const handleClick = (value) => {
         console.log(value);
+        dispatch({ type: "custom", payload: value.url });
     };
     const results = state.searchValue === "" 
         ? state.memes 

@@ -6,7 +6,7 @@ export default function PicPreview() {
   const handleClick = (value) => {
     //first try:
     // console.log(images.indexOf(value));
-    dispatch({ type: "random", payload: state.memes.indexOf(value) });
+    dispatch({ type: "custom", payload: state.memes.indexOf(value) });
   };
   return (
     <details className="collapse bg-base-200">
