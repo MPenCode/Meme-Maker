@@ -13,7 +13,7 @@ const Format = () => {
     //find the name attribute of the target
     // console.log(`${e.target.name}:${e.target.value}`);
     //[e.target.name] => "computed property"
-dispatch({ type: "text1", payload: {[e.target.name]: e.target.value} });
+dispatch({ type: "text1", payload: { topText: myInput1.current.value, bottomText: myInput2.current.value } });
 };
 
 const handleUpload = (e) => {
@@ -33,22 +33,32 @@ const handleRandom = () => {
 
 
 return (
-    <div>
-        <input
-            onChange={handleMemeText}
-            ref={myInput1}
-            type="text"
-            name="topText"
-        />
-        <input
-            onChange={handleMemeText}
-            ref={myInput2}
-            type="text"
-            name="bottomText"
-        />
-        <button onClick={handleRandom}>random</button>
+    <div className="flex flex-col items-center space-y-4 p-4">
+        <div className="flex flex-col items-center space-y-2">
+            <label className="text-lg font-semibold">Top Text</label>
+            <input
+                onChange={handleMemeText}
+                ref={myInput1}
+                type="text"
+                name="topText"
+                id="topText"
+                className="input input-bordered w-full max-w-xs"
+            />
+        </div>
+        <div className="flex flex-col items-center space-y-2">
+            <label className="text-lg font-semibold">Bottom Text</label>
+            <input
+                onChange={handleMemeText}
+                ref={myInput2}
+                type="text"
+                name="bottomText"
+                id="bottomText"
+                className="input input-bordered w-full max-w-xs"
+            />
+        </div>
+        <button onClick={handleRandom} className="btn btn-primary mt-4">Random</button>
         <br />
-        <input type="file" id="input" multiple onChange={handleUpload} />
+        <input type="file" id="input" multiple onChange={handleUpload} className="file-input file-input-bordered w-full max-w-xs mt-4" />
     </div>
 );
 };
