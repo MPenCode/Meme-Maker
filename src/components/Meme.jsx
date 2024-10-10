@@ -37,14 +37,14 @@ const Meme = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-base-100">
       <div
-        className="meme-container relative w-2/3 max-w-screen-lg"
+        className="meme-container relative w-2/3"
         ref={myImage}
       >
         {state.memes.length && (
           <img
             src={state.custom.length > 0 ? state.custom : state.memes[state.random].url}
             alt={state.memes[state.random].name}
-            className="first-image w-full"
+            className="w-96 object-contain mx-auto"
           />
         )}
         <p
