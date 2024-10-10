@@ -14,10 +14,8 @@ const Meme = () => {
 
   const downloadMeme = () => {
     domtoimage
-      //replace document.getElementById
       .toJpeg(myImage.current, { quality: 0.95 })
       .then(function (dataUrl) {
-        // console.log(dataUrl);
 
         const myMemes = JSON.parse(localStorage.getItem("myMemes")) || [];
         const newMeme = {
@@ -44,7 +42,7 @@ const Meme = () => {
       >
         {state.memes.length && (
           <img
-            src={state.custom ? state.custom : state.memes[state.random].url}
+            src={state.custom.length > 0 ? state.custom : state.memes[state.random].url}
             alt={state.memes[state.random].name}
             className="first-image w-full"
           />

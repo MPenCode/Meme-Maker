@@ -1,3 +1,4 @@
+// not in use yet
 const Menu = () => {
   return (
     <ul className="menu lg:menu-horizontal bg-base-200 rounded-box lg:mb-64">

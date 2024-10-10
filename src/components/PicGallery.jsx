@@ -61,18 +61,3 @@ const PicGallery = () => {
 };
 
 export default PicGallery;
-
-// {state.memes.slice(state.range[0], state.range[1]).map((image) => {
-//     return (
-//         <div className="relative" key={image.id}>
-//             <img
-//                 onClick={() => {
-//                     handleClick(image);
-//                 }}
-//                 src={image.url}
-//                 alt={image.name}
-//                 className="w-[100px] h-[100px] object-cover border border-gray-400 hover:scale-110 cursor-pointer transition-transform duration-200"
-//             />
-//         </div>
-//     );
-// })}
