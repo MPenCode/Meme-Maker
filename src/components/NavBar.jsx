@@ -1,4 +1,4 @@
-import {useEffect, useState, useContext} from 'react'
+import {useEffect, useContext} from 'react'
 import {MemeContext} from '../context/contextMeme.jsx'
 
 const NavBar = () => {
@@ -11,11 +11,8 @@ useEffect(() => {
 
 const handleSearch = (e) => {
     dispatch({type: 'searchValue', payload: e.target.value})
-    // const searchResults = state.memes.filter((meme) => {
-    //     return meme.name.includes(state.searchValue)
-    // })
     dispatch({type: 'search', payload: state.memes.filter((meme) => {
-        return meme.name.includes(state.searchValue)
+      return meme.name.toLowerCase().includes(state.searchValue.toLowerCase());
     })})
 }
 
