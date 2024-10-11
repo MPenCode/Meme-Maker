@@ -7,7 +7,6 @@ const MemeMaker = () => {
     <div>
       <Format />
       <Meme />
-      <div>MemeMaker</div>
       <PicGallery />
     </div>
   );
