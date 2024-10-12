@@ -68,10 +68,12 @@ const Format = () => {
         const newMeme = {
           dataUrl,
           time: new Date().toISOString(),
-          id: Date.now(),
+          id: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
           name: state.memeName + ".jpeg",
+          title: state.memeName,
         };
         myMemes.push(newMeme);
+        dispatch({ type: "storedMemes", payload: myMemes });
         localStorage.setItem("myMemes", JSON.stringify(myMemes));
         //will create a link and fire the click on it
         var link = document.createElement("a");
