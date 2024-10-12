@@ -3,16 +3,21 @@ import { createContext, useReducer } from "react";
 // Initial state
 const initialState = {
   images: [],
-  memes: [],
+  memes: JSON.parse(localStorage.getItem("memes")) || [],
   range: [0, 25],
   random: 0,
-  text1: "",
+  text1: {
+    topText: "",
+    bottomText: ""
+  },
   custom: [],
   search: [],
   searchValue: "",
   memeName: "my-meme",
-  colorMeme1: "#ffffff",
-  colorMeme2: "#ffffff",
+  colorMeme1: "#000000",
+  colorMeme2: "#000000",
+  resultImage: null,
+  storedMemes: JSON.parse(localStorage.getItem("myMemes")) || [],
 };
 
 // Reducer function
@@ -73,11 +78,26 @@ const memeReducer = (state, action) => {
             ...state,
             colorMeme2: action.payload
         };
+    case "resultImage":
+        return {
+            ...state,
+            resultImage: action.payload
+        };
+    case "storedMemes":
+        return {
+            ...state,
+            storedMemes: action.payload
+        };
 
     default:
       return state;
   }
 };
+
+// useEffect(() => {
+//   dispatch({ type: "storedMemes", payload: JSON.parse(localStorage.getItem("myMemes")) });
+// }, []);
+
 
 // Create context
 export const MemeContext = createContext();
