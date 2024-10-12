@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { MemeContext } from "../context/contextMeme.jsx";
 import { AiOutlineDownload, AiFillDelete, AiFillEdit } from "react-icons/ai";
 
@@ -9,6 +9,13 @@ export default function MemeGallery() {
   const handleImageClick = (meme) => {
     setClickedImage(meme);
   };
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const filteredMemes = state.storedMemes.filter(meme => meme.id > currentDate);
+    localStorage.setItem("myMemes", JSON.stringify(filteredMemes));
+    dispatch({ type: "storedMemes", payload: filteredMemes });
+  }, []);
 
   const handleDelete = (data) => {
     const updatedMemes = state.storedMemes.filter((meme) => meme !== data);

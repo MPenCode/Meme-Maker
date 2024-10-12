@@ -1,6 +1,7 @@
 import { useContext, useRef } from "react";
 import { MemeContext } from "../context/contextMeme.jsx";
 import domtoimage from "dom-to-image";
+import { NavLink } from "react-router-dom";
 
 const Format = () => {
   const { state, dispatch } = useContext(MemeContext);
@@ -69,8 +70,7 @@ const Format = () => {
           dataUrl,
           time: new Date().toISOString(),
           id: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
-          name: state.memeName + ".jpeg",
-          title: state.memeName,
+          name: state.memeName,
         };
         myMemes.push(newMeme);
         dispatch({ type: "storedMemes", payload: myMemes });
@@ -80,6 +80,9 @@ const Format = () => {
         link.download = state.memeName + ".jpeg";
         link.href = dataUrl;
         link.click();
+        handleReset();
+        // Navigate to /gallery after saving the meme
+        window.location.href = "/gallery";
       });
   };
 
