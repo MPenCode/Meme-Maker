@@ -1,14 +1,19 @@
-import Footer from "./components/Footer";
-import NavBar from "./components/NavBar";
+import Hero from "./site/Hero";
+import Gallery from "./site/Gallery";
 import MemeMaker from "./site/MemeMaker";
+import Lost from "./site/Lost";
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 function App() {
   return (
-    <div>
-      <NavBar />
-      <MemeMaker />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Hero />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/memeMaker" element={<MemeMaker />} />
+        <Route path="*" element={<Lost />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
