@@ -1,7 +1,6 @@
 import { useContext, useRef } from "react";
 import { MemeContext } from "../context/contextMeme.jsx";
 import domtoimage from "dom-to-image";
-import { NavLink } from "react-router-dom";
 
 const Format = () => {
   const { state, dispatch } = useContext(MemeContext);
@@ -9,6 +8,8 @@ const Format = () => {
   const myInput1 = useRef();
   const myInput2 = useRef();
   const myMemeName = useRef();
+  const myColor1 = useRef();
+  const myColor2 = useRef();
 
   const handleMemeText = (e) => {
     e.preventDefault();
@@ -48,13 +49,15 @@ const Format = () => {
     dispatch({ type: "random", payload: 0 });
     dispatch({ type: "custom", payload: [] });
     dispatch({ type: "memeName", payload: "" });
-    dispatch({ type: "colorMeme1", payload: "#ffffff" });
-    dispatch({ type: "colorMeme2", payload: "#ffffff" });
+    dispatch({ type: "colorMeme1", payload: "#000000" });
+    dispatch({ type: "colorMeme2", payload: "#000000" });
     dispatch({ type: "search", payload: [] });
     dispatch({ type: "searchValue", payload: "" });
     dispatch({ type: "range", payload: [0, 25] });
     myInput1.current.value = "";
     myInput2.current.value = "";
+    myColor1.current.value = "#000000";
+    myColor2.current.value = "#000000";
     myMemeName.current.value = "";
     dispatch({ type: "resultImage", payload: null });
   };
@@ -71,6 +74,8 @@ const Format = () => {
           time: new Date().toISOString(),
           id: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
           name: state.memeName,
+          color: [state.colorMeme1, state.colorMeme2],
+          text: [state.text1.topText, state.text1.bottomText],
         };
         myMemes.push(newMeme);
         dispatch({ type: "storedMemes", payload: myMemes });
@@ -101,6 +106,7 @@ const Format = () => {
           />
           <input
             type="color"
+            ref={myColor1}
             onChange={(e) => {
               dispatch({ type: "colorMeme1", payload: e.target.value });
             }}
@@ -130,6 +136,7 @@ const Format = () => {
           />
           <input
             type="color"
+            ref={myColor2}
             onChange={(e) =>
               dispatch({ type: "colorMeme2", payload: e.target.value })
             }

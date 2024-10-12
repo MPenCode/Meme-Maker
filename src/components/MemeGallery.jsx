@@ -10,6 +10,7 @@ export default function MemeGallery() {
     setClickedImage(meme);
   };
 
+  // Filter on the basis of current date on first Load
   useEffect(() => {
     const currentDate = new Date();
     const filteredMemes = state.storedMemes.filter(meme => meme.id > currentDate);
