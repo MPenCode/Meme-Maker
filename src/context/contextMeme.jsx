@@ -8,7 +8,7 @@ const initialState = {
   random: 0,
   text1: {
     topText: "",
-    bottomText: ""
+    bottomText: "",
   },
   custom: [],
   search: [],
@@ -39,10 +39,10 @@ const memeReducer = (state, action) => {
         range: action.payload,
       };
     case "random":
-        return {
-            ...state,
-            random: action.payload,
-        };
+      return {
+        ...state,
+        random: action.payload,
+      };
     case "text1":
       return {
         ...state,
@@ -54,40 +54,40 @@ const memeReducer = (state, action) => {
         custom: action.payload,
       };
     case "search":
-        return {
-            ...state,
-            search: action.payload,
-        };
+      return {
+        ...state,
+        search: action.payload,
+      };
     case "searchValue":
-        return {
-            ...state,
-            searchValue: action.payload,
-        };
+      return {
+        ...state,
+        searchValue: action.payload,
+      };
     case "memeName":
-        return {
-            ...state,
-            memeName: action.payload,
-        };
+      return {
+        ...state,
+        memeName: action.payload,
+      };
     case "colorMeme1":
-        return {
-            ...state,
-            colorMeme1: action.payload,
-        };
+      return {
+        ...state,
+        colorMeme1: action.payload,
+      };
     case "colorMeme2":
-        return {
-            ...state,
-            colorMeme2: action.payload
-        };
+      return {
+        ...state,
+        colorMeme2: action.payload,
+      };
     case "resultImage":
-        return {
-            ...state,
-            resultImage: action.payload
-        };
+      return {
+        ...state,
+        resultImage: action.payload,
+      };
     case "storedMemes":
-        return {
-            ...state,
-            storedMemes: action.payload
-        };
+      return {
+        ...state,
+        storedMemes: action.payload,
+      };
 
     default:
       return state;
@@ -97,7 +97,6 @@ const memeReducer = (state, action) => {
 // useEffect(() => {
 //   dispatch({ type: "storedMemes", payload: JSON.parse(localStorage.getItem("myMemes")) });
 // }, []);
-
 
 // Create context
 export const MemeContext = createContext();

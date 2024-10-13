@@ -40,7 +40,7 @@ const PicGallery = () => {
     return (
         <div className="flex flex-col items-center my-8">
             <PicRadio />
-            <div className="grid grid-cols-5 gap-4 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-4">
                 {results.slice(state.range[0], state.range[1]).map((image) => {
                     return (
                         <div className="relative" key={image.id}>

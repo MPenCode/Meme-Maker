@@ -1,6 +1,7 @@
 import { useContext, useRef } from "react";
 import { MemeContext } from "../context/contextMeme.jsx";
 import domtoimage from "dom-to-image";
+import { AiOutlineMenu } from "react-icons/ai";
 
 const Format = () => {
   const { state, dispatch } = useContext(MemeContext);
@@ -62,8 +63,6 @@ const Format = () => {
     dispatch({ type: "resultImage", payload: null });
   };
 
-  
-
   const downloadMeme = () => {
     domtoimage
       .toJpeg(state.resultImage, { quality: 0.95 })
@@ -102,7 +101,7 @@ const Format = () => {
             type="text"
             name="topText"
             id="topText"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full max-w-[10rem] sm:max-w-xs"
           />
           <input
             type="color"
@@ -112,15 +111,15 @@ const Format = () => {
             }}
             className="w-10 h-10 p-0 border-none rounded"
           />
-          <label className="text-lg font-semibold">Options
-          <input
-            type="checkbox"
-            id="Option1"
-            name="Option1"
-            value="false"
-            className="form-checkbox hidden"
-            onChange={console.log(123)}
-            /></label>
+          <div className="collapse bg-base-200 max-w-14">
+            <input type="checkbox" />
+            <div className="collapse-title text-xl font-medium">
+              <AiOutlineMenu />
+            </div>
+            <div className="collapse-content">
+              <p>hello</p>
+            </div>
+          </div>
         </div>
       </div>
       <div className="flex flex-col items-center space-y-2">
@@ -132,7 +131,7 @@ const Format = () => {
             type="text"
             name="bottomText"
             id="bottomText"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full max-w-[10rem] sm:max-w-xs"
           />
           <input
             type="color"
@@ -142,15 +141,15 @@ const Format = () => {
             }
             className="w-10 h-10 p-0 border-none rounded"
           />
-          <label className="text-lg font-semibold">Options
-          <input
-            type="checkbox"
-            id="Option2"
-            name="Option2"
-            value="false"
-            className="form-checkbox hidden"
-            onChange={console.log(123)}
-            /></label>
+          <div className="collapse bg-base-200 max-w-14">
+            <input type="checkbox" />
+            <div className="collapse-title text-xl font-medium">
+              <AiOutlineMenu />
+            </div>
+            <div className="collapse-content">
+              <p>hello</p>
+            </div>
+          </div>
         </div>
       </div>
       <button onClick={handleRandom} className="btn btn-primary mt-4">
