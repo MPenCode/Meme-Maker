@@ -26,7 +26,8 @@ const initialState = {
   },
   positionTop: "top-4 left-1/2",
   positionBottom: "bottom-4 left-1/2",
-  
+  topBoxBulean: false,
+  bottomBoxBulean: false,
 };
 
 // Reducer function
@@ -101,6 +102,21 @@ const memeReducer = (state, action) => {
       return {
         ...state,
         positionBottom: action.payload,
+      };
+    case "colorText":
+      return {
+        ...state,
+        colorText: action.payload,
+      };
+    case "topBoxBulean":
+      return {
+        ...state,
+        topBoxBulean: action.payload,
+      };
+    case "bottomBoxBulean":
+      return {
+        ...state,
+        bottomBoxBulean: action.payload,
       };
 
     default:

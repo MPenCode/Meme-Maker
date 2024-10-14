@@ -126,17 +126,19 @@ const Format = () => {
             }
             className="w-10 h-10 p-0 border-none rounded"
           />
-          <div className="collapse bg-base-200 max-w-14">
-            <input type="checkbox" />
-            <div className="collapse-title text-xl font-medium">
-              <AiOutlineMenu />
-            </div>
-            <div className="collapse-content">
-              <p>hello</p>
-            </div>
-          </div>
+          <button
+            className="btn btn-neutral"
+            onClick={() =>
+              dispatch({
+                type: "topBoxBulean",
+                payload: !state.topBoxBulean,
+              })
+            }
+          >
+            <AiOutlineMenu />
+          </button>
         </div>
-        <div className="flex">
+        {state.topBoxBulean && <div className="flex">
           <div>
             <input
               type="range"
@@ -174,8 +176,8 @@ const Format = () => {
               </button>
             </div>
           </div>
-            <PositionTop />
-        </div>
+          <PositionTop />
+        </div>}
       </div>
       <div className="flex flex-col items-center space-y-2">
         <label className="text-lg font-semibold">Bottom Text</label>
@@ -203,60 +205,59 @@ const Format = () => {
             }
             className="w-10 h-10 p-0 border-none rounded"
           />
-          <div className="collapse bg-base-200 max-w-14">
-            <input type="checkbox" />
-            <div className="collapse-title text-xl font-medium">
-              <AiOutlineMenu />
-            </div>
-            <div className="collapse-content">
-              <p>hello</p>
-            </div>
-          </div>
-        </div>
-        <div className="flex">
-        <div>
-          <input
-            type="range"
-            min={10}
-            max={50}
-            value={rangeValue2}
-            className="range"
-            step={10}
-            onChange={(e) => {
-              setRangeValue2(Number(e.target.value));
+          <button
+            className="btn btn-neutral"
+            onClick={() =>
               dispatch({
-                type: "textRange",
-                payload: {
-                  rangeTop: rangeValue1,
-                  rangeBottom: Number(e.target.value),
-                },
-              });
-            }}
-          />
-          <div className="flex w-full justify-between px-2 text-xs">
-            <button className="btn btn-xs" onClick={() => setRangeValue2(10)}>
-              1
-            </button>
-            <button className="btn btn-xs" onClick={() => setRangeValue2(20)}>
-              2
-            </button>
-            <button className="btn btn-xs" onClick={() => setRangeValue2(30)}>
-              3
-            </button>
-            <button className="btn btn-xs" onClick={() => setRangeValue2(40)}>
-              4
-            </button>
-            <button className="btn btn-xs" onClick={() => setRangeValue2(50)}>
-              5
-            </button>
+                type: "bottomBoxBulean",
+                payload: !state.bottomBoxBulean,
+              })
+            }
+          >
+            <AiOutlineMenu />
+          </button>
+        </div>
+        {state.bottomBoxBulean && <div className="flex">
+          <div>
+            <input
+              type="range"
+              min={10}
+              max={50}
+              value={rangeValue2}
+              className="range"
+              step={10}
+              onChange={(e) => {
+                setRangeValue2(Number(e.target.value));
+                dispatch({
+                  type: "textRange",
+                  payload: {
+                    rangeTop: rangeValue1,
+                    rangeBottom: Number(e.target.value),
+                  },
+                });
+              }}
+            />
+            <div className="flex w-full justify-between px-2 text-xs">
+              <button className="btn btn-xs" onClick={() => setRangeValue2(10)}>
+                1
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue2(20)}>
+                2
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue2(30)}>
+                3
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue2(40)}>
+                4
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue2(50)}>
+                5
+              </button>
+            </div>
           </div>
-        </div>
-        <PositionBottom />
-        </div>
+          <PositionBottom />
+        </div>}
       </div>
-      <button onClick={handleRandom} className="btn btn-primary mt-4">
-        Random
-      </button>
       <br />
       <input
         type="file"
@@ -284,6 +285,9 @@ const Format = () => {
           Reset
         </button>
       </div>
+      <button onClick={handleRandom} className="btn btn-accent mt-4">
+        Random Image
+      </button>
     </div>
   );
 };

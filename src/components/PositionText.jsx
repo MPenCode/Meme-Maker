@@ -44,14 +44,14 @@ export const PositionTop = () => {
           }}
         >
           <option value="top-[5%] left-1/4">Top Left</option>
-          <option value="top-[5%] left-1/2">Center</option>
+          <option value="top-[5%] left-1/2">Top Center</option>
           <option value="top-[5%] left-3/4">Top Right</option>
           <option value="top-1/4 left-1/2">Middle Center</option>
           <option value="top-1/4 left-1/4">Middle Left</option>
           <option value="top-1/4 left-3/4">Middle Right</option>
-          <option value="top-[40%] left-1/2">Top Center</option>
-          <option value="top-[40%] left-1/4">Top Left</option>
-          <option value="top-[40%] left-3/4">Top Right</option>
+          <option value="top-[40%] left-1/2">Bottom Center</option>
+          <option value="top-[40%] left-1/4">Bottom Left</option>
+          <option value="top-[40%] left-3/4">Bottom Right</option>
         </select>
     </div>
   );
