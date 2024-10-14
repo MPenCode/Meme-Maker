@@ -1,6 +1,8 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { MemeContext } from "../context/contextMeme.jsx";
 import domtoimage from "dom-to-image";
+import { AiOutlineMenu } from "react-icons/ai";
+import { PositionBottom, PositionTop } from "./PositionText.jsx";
 
 const Format = () => {
   const { state, dispatch } = useContext(MemeContext);
@@ -8,6 +10,10 @@ const Format = () => {
   const myInput1 = useRef();
   const myInput2 = useRef();
   const myMemeName = useRef();
+  const myColor1 = useRef();
+  const myColor2 = useRef();
+  const [rangeValue1, setRangeValue1] = useState(30);
+  const [rangeValue2, setRangeValue2] = useState(30);
 
   const handleMemeText = (e) => {
     e.preventDefault();
@@ -47,18 +53,23 @@ const Format = () => {
     dispatch({ type: "random", payload: 0 });
     dispatch({ type: "custom", payload: [] });
     dispatch({ type: "memeName", payload: "" });
-    dispatch({ type: "colorMeme1", payload: "#ffffff" });
-    dispatch({ type: "colorMeme2", payload: "#ffffff" });
     dispatch({ type: "search", payload: [] });
     dispatch({ type: "searchValue", payload: "" });
     dispatch({ type: "range", payload: [0, 25] });
+    dispatch({ type: "textRange", payload: { rangeTop: 30, rangeBottom: 30 } });
+    dispatch({
+      type: "colorText",
+      payload: { colorTop: "#ffffff", colorBottom: "#ffffff" },
+    });
     myInput1.current.value = "";
     myInput2.current.value = "";
+    myColor1.current.value = "#ffffff";
+    myColor2.current.value = "#ffffff";
     myMemeName.current.value = "";
+    setRangeValue1(30);
+    setRangeValue2(30);
     dispatch({ type: "resultImage", payload: null });
   };
-
-  
 
   const downloadMeme = () => {
     domtoimage
@@ -69,8 +80,9 @@ const Format = () => {
           dataUrl,
           time: new Date().toISOString(),
           id: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
-          name: state.memeName + ".jpeg",
-          title: state.memeName,
+          name: state.memeName,
+          color: state.colorText,
+          text: [state.text1.topText, state.text1.bottomText],
         };
         myMemes.push(newMeme);
         dispatch({ type: "storedMemes", payload: myMemes });
@@ -80,6 +92,9 @@ const Format = () => {
         link.download = state.memeName + ".jpeg";
         link.href = dataUrl;
         link.click();
+        handleReset();
+        // Navigate to /gallery after saving the meme
+        window.location.href = "/gallery";
       });
   };
 
@@ -94,25 +109,75 @@ const Format = () => {
             type="text"
             name="topText"
             id="topText"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full max-w-[10rem] sm:max-w-xs"
           />
           <input
             type="color"
-            onChange={(e) => {
-              dispatch({ type: "colorMeme1", payload: e.target.value });
-            }}
+            ref={myColor1}
+            defaultValue="#ffffff"
+            onChange={(e) =>
+              dispatch({
+                type: "colorText",
+                payload: {
+                  colorTop: e.target.value,
+                  colorBottom: myColor2.current.value,
+                },
+              })
+            }
             className="w-10 h-10 p-0 border-none rounded"
           />
-          <label className="text-lg font-semibold">Options
-          <input
-            type="checkbox"
-            id="Option1"
-            name="Option1"
-            value="false"
-            className="form-checkbox hidden"
-            onChange={console.log(123)}
-            /></label>
+          <button
+            className="btn btn-neutral"
+            onClick={() =>
+              dispatch({
+                type: "topBoxBulean",
+                payload: !state.topBoxBulean,
+              })
+            }
+          >
+            <AiOutlineMenu />
+          </button>
         </div>
+        {state.topBoxBulean && <div className="flex">
+          <div>
+            <input
+              type="range"
+              min={10}
+              max={50}
+              value={rangeValue1}
+              className="range"
+              step={10}
+              onChange={(e) => {
+                setRangeValue1(Number(e.target.value));
+                dispatch({
+                  type: "textRange",
+                  payload: {
+                    rangeTop: Number(e.target.value),
+                    rangeBottom: rangeValue2,
+                  },
+                });
+              }}
+            />
+            <div className="flex w-full justify-between px-2 text-xs">
+              <button className="btn btn-xs" onClick={() => setRangeValue1(10)}>
+                1
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue1(20)}>
+                2
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue1(30)}>
+                3
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue1(40)}>
+                4
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue1(50)}>
+                5
+              </button>
+            </div>
+          </div>
+          <PositionTop />
+        </div>}
       </div>
       <div className="flex flex-col items-center space-y-2">
         <label className="text-lg font-semibold">Bottom Text</label>
@@ -123,29 +188,76 @@ const Format = () => {
             type="text"
             name="bottomText"
             id="bottomText"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full max-w-[10rem] sm:max-w-xs"
           />
           <input
             type="color"
+            ref={myColor2}
+            defaultValue="#ffffff"
             onChange={(e) =>
-              dispatch({ type: "colorMeme2", payload: e.target.value })
+              dispatch({
+                type: "colorText",
+                payload: {
+                  colorTop: myColor1.current.value,
+                  colorBottom: e.target.value,
+                },
+              })
             }
             className="w-10 h-10 p-0 border-none rounded"
           />
-          <label className="text-lg font-semibold">Options
-          <input
-            type="checkbox"
-            id="Option2"
-            name="Option2"
-            value="false"
-            className="form-checkbox hidden"
-            onChange={console.log(123)}
-            /></label>
+          <button
+            className="btn btn-neutral"
+            onClick={() =>
+              dispatch({
+                type: "bottomBoxBulean",
+                payload: !state.bottomBoxBulean,
+              })
+            }
+          >
+            <AiOutlineMenu />
+          </button>
         </div>
+        {state.bottomBoxBulean && <div className="flex">
+          <div>
+            <input
+              type="range"
+              min={10}
+              max={50}
+              value={rangeValue2}
+              className="range"
+              step={10}
+              onChange={(e) => {
+                setRangeValue2(Number(e.target.value));
+                dispatch({
+                  type: "textRange",
+                  payload: {
+                    rangeTop: rangeValue1,
+                    rangeBottom: Number(e.target.value),
+                  },
+                });
+              }}
+            />
+            <div className="flex w-full justify-between px-2 text-xs">
+              <button className="btn btn-xs" onClick={() => setRangeValue2(10)}>
+                1
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue2(20)}>
+                2
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue2(30)}>
+                3
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue2(40)}>
+                4
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue2(50)}>
+                5
+              </button>
+            </div>
+          </div>
+          <PositionBottom />
+        </div>}
       </div>
-      <button onClick={handleRandom} className="btn btn-primary mt-4">
-        Random
-      </button>
       <br />
       <input
         type="file"
@@ -173,6 +285,9 @@ const Format = () => {
           Reset
         </button>
       </div>
+      <button onClick={handleRandom} className="btn btn-accent mt-4">
+        Random Image
+      </button>
     </div>
   );
 };

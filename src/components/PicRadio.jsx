@@ -23,12 +23,12 @@ const PicRadio = () => {
           type="text"
           onChange={handleSearch}
           placeholder="Search"
-          className="input input-bordered w-full max-w-xs mr-2"
+          className="input input-bordered w-full max-w-[10rem] sm:max-w-xs mr-2"
         />
       </div>
       <div className="join mb-3">
         <input
-          className="join-item btn btn-square"
+          className="join-item btn btn-sm sm:btn-md btn-square"
           type="radio"
           name="options"
           aria-label="1"
@@ -36,21 +36,21 @@ const PicRadio = () => {
           onClick={() => handleRangeChange([0, 25])}
         />
         <input
-          className="join-item btn btn-square"
+          className="join-item btn btn-sm sm:btn btn-square"
           type="radio"
           name="options"
           aria-label="2"
           onClick={() => handleRangeChange([25, 50])}
         />
         <input
-          className="join-item btn btn-square"
+          className="join-item btn btn-sm sm:btn btn-square"
           type="radio"
           name="options"
           aria-label="3"
           onClick={() => handleRangeChange([50, 75])}
         />
         <input
-          className="join-item btn btn-square"
+          className="join-item btn btn-sm sm:btn btn-square"
           type="radio"
           name="options"
           aria-label="4"

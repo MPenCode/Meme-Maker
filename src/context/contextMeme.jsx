@@ -8,16 +8,26 @@ const initialState = {
   random: 0,
   text1: {
     topText: "",
-    bottomText: ""
+    bottomText: "",
   },
   custom: [],
   search: [],
   searchValue: "",
   memeName: "my-meme",
-  colorMeme1: "#000000",
-  colorMeme2: "#000000",
+  colorText: {
+    colorTop: "#ffffff",
+    colorBottom: "#ffffff",
+  },
   resultImage: null,
   storedMemes: JSON.parse(localStorage.getItem("myMemes")) || [],
+  textRange: {
+    rangeTop: 30,
+    rangeBottom: 30,
+  },
+  positionTop: "top-4 left-1/2",
+  positionBottom: "bottom-4 left-1/2",
+  topBoxBulean: false,
+  bottomBoxBulean: false,
 };
 
 // Reducer function
@@ -39,10 +49,10 @@ const memeReducer = (state, action) => {
         range: action.payload,
       };
     case "random":
-        return {
-            ...state,
-            random: action.payload,
-        };
+      return {
+        ...state,
+        random: action.payload,
+      };
     case "text1":
       return {
         ...state,
@@ -54,40 +64,60 @@ const memeReducer = (state, action) => {
         custom: action.payload,
       };
     case "search":
-        return {
-            ...state,
-            search: action.payload,
-        };
+      return {
+        ...state,
+        search: action.payload,
+      };
     case "searchValue":
-        return {
-            ...state,
-            searchValue: action.payload,
-        };
+      return {
+        ...state,
+        searchValue: action.payload,
+      };
     case "memeName":
-        return {
-            ...state,
-            memeName: action.payload,
-        };
-    case "colorMeme1":
-        return {
-            ...state,
-            colorMeme1: action.payload,
-        };
-    case "colorMeme2":
-        return {
-            ...state,
-            colorMeme2: action.payload
-        };
+      return {
+        ...state,
+        memeName: action.payload,
+      };
     case "resultImage":
-        return {
-            ...state,
-            resultImage: action.payload
-        };
+      return {
+        ...state,
+        resultImage: action.payload,
+      };
     case "storedMemes":
-        return {
-            ...state,
-            storedMemes: action.payload
-        };
+      return {
+        ...state,
+        storedMemes: action.payload,
+      };
+    case "textRange":
+      return {
+        ...state,
+        textRange: action.payload,
+      };
+    case "positionTop":
+      return {
+        ...state,
+        positionTop: action.payload,
+      };
+    case "positionBottom":
+      return {
+        ...state,
+        positionBottom: action.payload,
+      };
+    case "colorText":
+      return {
+        ...state,
+        colorText: action.payload,
+      };
+    case "topBoxBulean":
+      return {
+        ...state,
+        topBoxBulean: action.payload,
+      };
+    case "bottomBoxBulean":
+      return {
+        ...state,
+        bottomBoxBulean: action.payload,
+      };
 
     default:
       return state;
@@ -97,7 +127,6 @@ const memeReducer = (state, action) => {
 // useEffect(() => {
 //   dispatch({ type: "storedMemes", payload: JSON.parse(localStorage.getItem("myMemes")) });
 // }, []);
-
 
 // Create context
 export const MemeContext = createContext();
