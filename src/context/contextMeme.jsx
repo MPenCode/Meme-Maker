@@ -14,10 +14,19 @@ const initialState = {
   search: [],
   searchValue: "",
   memeName: "my-meme",
-  colorMeme1: "#000000",
-  colorMeme2: "#000000",
+  colorText: {
+    colorTop: "#ffffff",
+    colorBottom: "#ffffff",
+  },
   resultImage: null,
   storedMemes: JSON.parse(localStorage.getItem("myMemes")) || [],
+  textRange: {
+    rangeTop: 30,
+    rangeBottom: 30,
+  },
+  positionTop: "top-4 left-1/2",
+  positionBottom: "bottom-4 left-1/2",
+  
 };
 
 // Reducer function
@@ -68,16 +77,6 @@ const memeReducer = (state, action) => {
         ...state,
         memeName: action.payload,
       };
-    case "colorMeme1":
-      return {
-        ...state,
-        colorMeme1: action.payload,
-      };
-    case "colorMeme2":
-      return {
-        ...state,
-        colorMeme2: action.payload,
-      };
     case "resultImage":
       return {
         ...state,
@@ -87,6 +86,21 @@ const memeReducer = (state, action) => {
       return {
         ...state,
         storedMemes: action.payload,
+      };
+    case "textRange":
+      return {
+        ...state,
+        textRange: action.payload,
+      };
+    case "positionTop":
+      return {
+        ...state,
+        positionTop: action.payload,
+      };
+    case "positionBottom":
+      return {
+        ...state,
+        positionBottom: action.payload,
       };
 
     default:

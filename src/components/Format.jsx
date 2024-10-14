@@ -1,7 +1,8 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { MemeContext } from "../context/contextMeme.jsx";
 import domtoimage from "dom-to-image";
 import { AiOutlineMenu } from "react-icons/ai";
+import { PositionBottom, PositionTop } from "./PositionText.jsx";
 
 const Format = () => {
   const { state, dispatch } = useContext(MemeContext);
@@ -11,6 +12,8 @@ const Format = () => {
   const myMemeName = useRef();
   const myColor1 = useRef();
   const myColor2 = useRef();
+  const [rangeValue1, setRangeValue1] = useState(30);
+  const [rangeValue2, setRangeValue2] = useState(30);
 
   const handleMemeText = (e) => {
     e.preventDefault();
@@ -50,16 +53,21 @@ const Format = () => {
     dispatch({ type: "random", payload: 0 });
     dispatch({ type: "custom", payload: [] });
     dispatch({ type: "memeName", payload: "" });
-    dispatch({ type: "colorMeme1", payload: "#000000" });
-    dispatch({ type: "colorMeme2", payload: "#000000" });
     dispatch({ type: "search", payload: [] });
     dispatch({ type: "searchValue", payload: "" });
     dispatch({ type: "range", payload: [0, 25] });
+    dispatch({ type: "textRange", payload: { rangeTop: 30, rangeBottom: 30 } });
+    dispatch({
+      type: "colorText",
+      payload: { colorTop: "#ffffff", colorBottom: "#ffffff" },
+    });
     myInput1.current.value = "";
     myInput2.current.value = "";
-    myColor1.current.value = "#000000";
-    myColor2.current.value = "#000000";
+    myColor1.current.value = "#ffffff";
+    myColor2.current.value = "#ffffff";
     myMemeName.current.value = "";
+    setRangeValue1(30);
+    setRangeValue2(30);
     dispatch({ type: "resultImage", payload: null });
   };
 
@@ -73,7 +81,7 @@ const Format = () => {
           time: new Date().toISOString(),
           id: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
           name: state.memeName,
-          color: [state.colorMeme1, state.colorMeme2],
+          color: state.colorText,
           text: [state.text1.topText, state.text1.bottomText],
         };
         myMemes.push(newMeme);
@@ -106,9 +114,16 @@ const Format = () => {
           <input
             type="color"
             ref={myColor1}
-            onChange={(e) => {
-              dispatch({ type: "colorMeme1", payload: e.target.value });
-            }}
+            defaultValue="#ffffff"
+            onChange={(e) =>
+              dispatch({
+                type: "colorText",
+                payload: {
+                  colorTop: e.target.value,
+                  colorBottom: myColor2.current.value,
+                },
+              })
+            }
             className="w-10 h-10 p-0 border-none rounded"
           />
           <div className="collapse bg-base-200 max-w-14">
@@ -120,6 +135,46 @@ const Format = () => {
               <p>hello</p>
             </div>
           </div>
+        </div>
+        <div className="flex">
+          <div>
+            <input
+              type="range"
+              min={10}
+              max={50}
+              value={rangeValue1}
+              className="range"
+              step={10}
+              onChange={(e) => {
+                setRangeValue1(Number(e.target.value));
+                dispatch({
+                  type: "textRange",
+                  payload: {
+                    rangeTop: Number(e.target.value),
+                    rangeBottom: rangeValue2,
+                  },
+                });
+              }}
+            />
+            <div className="flex w-full justify-between px-2 text-xs">
+              <button className="btn btn-xs" onClick={() => setRangeValue1(10)}>
+                1
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue1(20)}>
+                2
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue1(30)}>
+                3
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue1(40)}>
+                4
+              </button>
+              <button className="btn btn-xs" onClick={() => setRangeValue1(50)}>
+                5
+              </button>
+            </div>
+          </div>
+            <PositionTop />
         </div>
       </div>
       <div className="flex flex-col items-center space-y-2">
@@ -136,8 +191,15 @@ const Format = () => {
           <input
             type="color"
             ref={myColor2}
+            defaultValue="#ffffff"
             onChange={(e) =>
-              dispatch({ type: "colorMeme2", payload: e.target.value })
+              dispatch({
+                type: "colorText",
+                payload: {
+                  colorTop: myColor1.current.value,
+                  colorBottom: e.target.value,
+                },
+              })
             }
             className="w-10 h-10 p-0 border-none rounded"
           />
@@ -150,6 +212,46 @@ const Format = () => {
               <p>hello</p>
             </div>
           </div>
+        </div>
+        <div className="flex">
+        <div>
+          <input
+            type="range"
+            min={10}
+            max={50}
+            value={rangeValue2}
+            className="range"
+            step={10}
+            onChange={(e) => {
+              setRangeValue2(Number(e.target.value));
+              dispatch({
+                type: "textRange",
+                payload: {
+                  rangeTop: rangeValue1,
+                  rangeBottom: Number(e.target.value),
+                },
+              });
+            }}
+          />
+          <div className="flex w-full justify-between px-2 text-xs">
+            <button className="btn btn-xs" onClick={() => setRangeValue2(10)}>
+              1
+            </button>
+            <button className="btn btn-xs" onClick={() => setRangeValue2(20)}>
+              2
+            </button>
+            <button className="btn btn-xs" onClick={() => setRangeValue2(30)}>
+              3
+            </button>
+            <button className="btn btn-xs" onClick={() => setRangeValue2(40)}>
+              4
+            </button>
+            <button className="btn btn-xs" onClick={() => setRangeValue2(50)}>
+              5
+            </button>
+          </div>
+        </div>
+        <PositionBottom />
         </div>
       </div>
       <button onClick={handleRandom} className="btn btn-primary mt-4">
