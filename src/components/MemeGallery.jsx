@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { MemeContext } from "../context/contextMeme.jsx";
-import { AiOutlineDownload, AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { AiOutlineDownload, AiFillDelete, AiOutlineExpand  } from "react-icons/ai";
 
 export default function MemeGallery() {
   const { state, dispatch } = useContext(MemeContext);
@@ -10,11 +10,26 @@ export default function MemeGallery() {
     setClickedImage(meme);
   };
 
+  // Filter on the basis of current date on first Load
+  useEffect(() => {
+    const currentDate = new Date();
+    const filteredMemes = state.storedMemes.filter(meme => meme.id > currentDate);
+    localStorage.setItem("myMemes", JSON.stringify(filteredMemes));
+    dispatch({ type: "storedMemes", payload: filteredMemes });
+  }, []);
+
   const handleDelete = (data) => {
     const updatedMemes = state.storedMemes.filter((meme) => meme !== data);
     localStorage.setItem("myMemes", JSON.stringify(updatedMemes));
     dispatch({ type: "storedMemes", payload: updatedMemes });
   };
+
+  const handleDownload = (meme) => {  
+        var link = document.createElement("a");
+        link.download = meme.name + ".jpeg";
+        link.href = meme.dataUrl;
+        link.click();
+      };
 
   return (
     <div className="px-20">
@@ -60,10 +75,14 @@ export default function MemeGallery() {
                 onClick={() => handleImageClick(meme)}
               />
               <div className="flex justify-around items-center space-x-2">
-                <button className="btn btn-xs btn-outline btn-primary hover:btn-primary">
-                  <AiFillEdit />
+                <button className="btn btn-xs btn-outline btn-primary hover:btn-primary"
+                onClick={() => handleImageClick(meme)}
+                >
+                  <AiOutlineExpand />
                 </button>
-                <button className="btn btn-xs btn-outline btn-success hover:btn-success">
+                <button className="btn btn-xs btn-outline btn-success hover:btn-success"
+                onClick={() => handleDownload(meme)}
+                >
                   <AiOutlineDownload />
                 </button>
                 <button

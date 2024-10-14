@@ -1,6 +1,7 @@
 import {useEffect, useContext} from 'react'
 import {Link} from 'react-router-dom'
 import {MemeContext} from '../context/contextMeme.jsx'
+import { AiOutlineMenu } from "react-icons/ai";
 
 const NavBar = () => {
     const {state, dispatch} = useContext(MemeContext)
@@ -22,11 +23,33 @@ const handleSearch = (e) => {
     <nav className="navbar bg-base-100">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">Meme-Maker</Link>
-        <Link to="/memeMaker" className="btn btn-ghost">Create new Meme</Link>
-        <Link to="/gallery" className="btn btn-ghost">Gallery</Link>
+        <div className="dropdown dropdown-end sm:hidden">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <AiOutlineMenu />
+          </div>
+        <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+          >
+            <li>
+              <Link to="/memeMaker">
+                Create new Meme
+              </Link>
+            </li>
+            <li>
+              <Link to="/gallery">Gallery</Link>
+            </li>
+          </ul>
+          </div>
+        <Link to="/memeMaker" className="btn btn-ghost invisible sm:visible">Create new Meme</Link>
+        <Link to="/gallery" className="btn btn-ghost invisible sm:visible">Gallery</Link>
       </div>
       <div className="flex-none gap-2">
-        <div className="form-control">
+        <div className="form-control invisible sm:visible">
           <input
             type="text"
             onChange={handleSearch}
@@ -34,7 +57,7 @@ const handleSearch = (e) => {
             className="input input-bordered w-24 md:w-auto"
           />
         </div>
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-end invisible sm:visible">
           <div
             tabIndex={0}
             role="button"

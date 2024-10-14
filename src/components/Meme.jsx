@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect } from "react";
+import { useContext, useRef, useEffect} from "react";
 import { MemeContext } from "../context/contextMeme.jsx";
 
 
@@ -27,14 +27,14 @@ const Meme = () => {
           />
         )}
         <p
-          className="top absolute top-4 left-1/2 transform -translate-x-1/2 text-xl font-bold"
-          style={{ color: state.colorMeme1, WebkitTextStroke: "1px black", fontSize: "30px" }}
+          className={`top absolute transform -translate-x-1/2 text-xl font-bold ${state.positionTop}`}
+          style={{ color: state.colorText.colorTop, WebkitTextStroke: "1px black", fontSize: state.textRange.rangeTop + "px" }}
         >
           {state.text1?.topText}
         </p>
         <p
-          className="bottom absolute bottom-4 left-1/2 transform -translate-x-1/2 text-xl font-bold"
-          style={{ color: state.colorMeme2, WebkitTextStroke: "1px black", fontSize: "30px" }}
+          className={`bottom absolute transform -translate-x-1/2 text-xl font-bold ${state.positionBottom}`}
+          style={{ color: state.colorText.colorBottom, WebkitTextStroke: "1px black", fontSize: state.textRange.rangeBottom + "px" }}
         >
           {state.text1?.bottomText}
         </p>
