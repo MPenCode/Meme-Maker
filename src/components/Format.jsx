@@ -3,8 +3,10 @@ import { MemeContext } from "../context/contextMeme.jsx";
 import domtoimage from "dom-to-image";
 import { AiOutlineMenu } from "react-icons/ai";
 import { PositionBottom, PositionTop } from "./PositionText.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Format = () => {
+  const navigate = useNavigate();
   const { state, dispatch } = useContext(MemeContext);
 
   const myInput1 = useRef();
@@ -94,7 +96,7 @@ const Format = () => {
         link.click();
         handleReset();
         // Navigate to /gallery after saving the meme
-        window.location.href = "/gallery";
+        navigate("/gallery");
       });
   };
 
